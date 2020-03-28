@@ -16,7 +16,7 @@ def main():
 
     
     ## PARAMETERS
-    message_str = "This"
+    message_str = "This is a very secret message!"
 
     unicode_enc = False
     mode = 'arithmetic'
