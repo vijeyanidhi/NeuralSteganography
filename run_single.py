@@ -41,7 +41,7 @@ def main():
 """
 
     context_tokens = encode_context(context, enc)
-
+    print(context)
     # ------------------------------------------------------------------------------------
     # ------------------------------------------------------------------------------------
 
@@ -60,6 +60,7 @@ def main():
     Hq = 0
     if mode == 'arithmetic':
         out, nll, kl, words_per_bit, Hq = encode_arithmetic(model, enc, message, context_tokens, temp=temp, finish_sent=finish_sent, precision=precision, topk=topk)
+        print('arithmetic')
     elif mode == 'huffman':
         out, nll, kl, words_per_bit = encode_huffman(model, enc, message, context_tokens, block_size, finish_sent=finish_sent)
     elif mode == 'bins':
@@ -68,22 +69,24 @@ def main():
         out, nll, kl, Hq = sample(model, enc, sample_tokens, context_tokens, temperature=temp, topk=topk)
         words_per_bit = 1
     text = enc.decode(out)
-    
+    print('encoding done')
     print(message)
     print(len(message))
     print("="*40 + " Encoding " + "="*40)
     print(text)
     print('ppl: %0.2f, kl: %0.3f, words/bit: %0.2f, bits/word: %0.2f, entropy: %.2f' % (math.exp(nll), kl, words_per_bit, 1/words_per_bit, Hq/0.69315))
-    
+    print()
     # Decode binary message from bits using the same arbitrary context
     if mode != 'sample':
         if mode == 'arithmetic':
             message_rec = decode_arithmetic(model, enc, text, context_tokens, temp=temp, precision=precision, topk=topk)
+            print('arithmetic')
         elif mode == 'huffman':
             message_rec = decode_huffman(model, enc, text, context_tokens, block_size)
+            print('huffman')
         elif mode == 'bins':
             message_rec = decode_block(model, enc, text, context_tokens, block_size, bin2words, words2bin)
-
+            print('bins')
         print("="*40 + " Recovered Message " + "="*40)
         print(message_rec)
         print("=" * 80)
