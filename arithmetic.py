@@ -126,6 +126,7 @@ def decode_arithmetic(model, enc, text, context, device='cuda', temp=1.0, precis
     # inp is a list of token indices
     # context is a list of token indices
     inp = enc.encode(text)
+    inp = inp[1:]
     # common BPE error case: 128, 128 (2 newlines) is interpretted as 628 (2 newlines)
     i = 0
     while i < len(inp):
