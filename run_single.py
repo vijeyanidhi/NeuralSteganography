@@ -12,7 +12,7 @@ from huffman_baseline import encode_huffman, decode_huffman
 from sample import sample
 
 def main():
-    enc, model = get_model(model_name='gpt2')
+    enc, model = get_model(model_name='gpt2-xl')
 
     
     ## PARAMETERS
